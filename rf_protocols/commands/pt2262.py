@@ -51,7 +51,7 @@ from typing import override
 
 from . import ModulationType, RadioFrequencyCommand
 
-_VALID_SYMBOLS = frozenset("01F")
+_VALID_SYMBOLS = frozenset("01FX")
 
 
 class PT2262Command(RadioFrequencyCommand):
@@ -64,7 +64,7 @@ class PT2262Command(RadioFrequencyCommand):
         self,
         *,
         data: str,
-        timebase_us: int = 350,
+        timebase_us: int = 350, # length of a short pulse
         frequency: int = 433_920_000,
         repeat_count: int = 5,
     ) -> None:
@@ -73,7 +73,7 @@ class PT2262Command(RadioFrequencyCommand):
         if len(normalized_data) != 12:
             raise ValueError("data must be exactly 12 characters long")
         if not set(normalized_data).issubset(_VALID_SYMBOLS):
-            raise ValueError("data must contain only symbols '0', '1', and 'F'")
+            raise ValueError("data must contain only symbols '0', '1', 'F', and 'X'")
 
         super().__init__(
             frequency=frequency,
@@ -86,13 +86,14 @@ class PT2262Command(RadioFrequencyCommand):
     @override
     def get_raw_timings(self) -> list[int]:
         """Compute the PT2262 frame timings followed by the sync symbol."""
-        short_us = 4 * self.timebase_us
-        long_us = 12 * self.timebase_us
-        sync_low_us = 124 * self.timebase_us
+        short_us = self.timebase_us
+        long_us = 3 * self.timebase_us
+        sync_low_us = 31 * self.timebase_us
         symbols = {
             "0": [short_us, -long_us, short_us, -long_us],
             "1": [long_us, -short_us, long_us, -short_us],
             "F": [short_us, -long_us, long_us, -short_us],
+            "X": [short_us, -long_us, short_us, -short_us],
         }
 
         timings: list[int] = []
