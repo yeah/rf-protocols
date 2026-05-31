@@ -5,6 +5,8 @@ encoder (lib/subghz/protocols/marantec.c) for the documented sample keys,
 including the unit-test key from Flipper's marantec.sub resource.
 """
 
+from itertools import pairwise
+
 import pytest
 
 from rf_protocols import ModulationType, RadioFrequencyCommand
@@ -59,7 +61,7 @@ def test_marantec_timings_match_reference() -> None:
 def test_marantec_timings_strictly_alternate() -> None:
     """Output strictly alternates between positive and negative durations."""
     timings = MarantecCommand(code=_TEST_KEY).get_raw_timings()
-    for first, second in zip(timings, timings[1:]):
+    for first, second in pairwise(timings):
         assert (first > 0) != (second > 0)
 
 
