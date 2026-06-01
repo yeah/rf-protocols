@@ -1,9 +1,22 @@
 """Marantec garage door / gate RF command definitions.
 
-Marantec openers (e.g. Comfort / Digital series) use a static 49-bit OOK
-protocol, Manchester-encoded. Unlike rolling-code systems the transmitted
-code is fixed per remote, so a code learned once (for example with a Flipper
+Marantec openers use, in their static-code variants, a fixed 49-bit OOK
+protocol, Manchester-encoded. Unlike rolling-code systems the transmitted code
+is constant per remote, so a code learned once (for example with a Flipper
 Zero, which reports it as a 49-bit ``Key``) remains valid indefinitely.
+
+Compatibility is best determined by protocol signature rather than by product
+model: this encoder applies to a remote that a Flipper Zero decodes as protocol
+``Marantec`` with a 49-bit key. Marantec openers span several frequencies and
+generations (315 MHz in the US, 868.35 MHz in the EU, plus older static and
+newer rolling-code systems), and no public source maps specific model numbers
+to this protocol, so a model list is intentionally not claimed. This encoder
+does NOT cover:
+
+* rolling-code Marantec systems (not static; a captured code cannot be
+  replayed); or
+* Flipper's separate 24-bit ``Marantec24`` protocol, which despite the name
+  originates from third-party cloner remotes rather than genuine Marantec.
 
 The 49-bit value embeds a constant prefix, a serial number, a button nibble, a
 constant byte and a CRC-8 (polynomial ``0x1D``, init ``0x01``). This encoder
