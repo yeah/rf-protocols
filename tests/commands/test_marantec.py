@@ -35,7 +35,7 @@ def test_marantec_command_rf_parameters() -> None:
     command = MarantecCommand(code=_TEST_KEY)
     assert command.frequency == 868_350_000
     assert command.modulation == ModulationType.OOK
-    assert command.repeat_count == 3
+    assert command.repeat_count == 4
     assert command.symbol_rate is None
     assert command.output_power is None
 

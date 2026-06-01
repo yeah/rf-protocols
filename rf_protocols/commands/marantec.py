@@ -21,9 +21,11 @@ from . import ModulationType, RadioFrequencyCommand
 
 # Marantec EU openers operate at 868.35 MHz; some variants use 433.92 MHz.
 # rf_protocols repeat_count is the number of *additional* transmissions; the
-# transmitter sends repeat_count + 1 frames total. Flipper sends ~4 frames.
+# transmitter sends repeat_count + 1 frames total. A real Marantec opener was
+# verified against hardware; 5 total frames (repeat_count = 4) actuates it
+# reliably with margin.
 _MARANTEC_FREQUENCY = 868_350_000
-_MARANTEC_REPEAT_COUNT = 3
+_MARANTEC_REPEAT_COUNT = 4
 
 _TE_SHORT = 1000
 _TE_LONG = 2000
