@@ -1,9 +1,4 @@
-"""Tests for the Marantec RF command encoder.
-
-Ground-truth timing fixtures are derived from the reference Flipper Zero
-encoder (lib/subghz/protocols/marantec.c) for the documented sample keys,
-including the unit-test key from Flipper's marantec.sub resource.
-"""
+"""Tests for the Marantec RF command encoder."""
 
 from itertools import pairwise
 
@@ -12,11 +7,8 @@ import pytest
 from rf_protocols import ModulationType, RadioFrequencyCommand
 from rf_protocols.commands.marantec import MarantecCommand
 
-# Flipper marantec.sub unit-test key: 00 01 30 07 10 DF 86 9F -> 0x1300710DF869F
 _TEST_KEY = 0x1300710DF869F
 
-# Expected signed-microsecond timings for _TEST_KEY, generated from the
-# reference Manchester encoder (mark-first, 49 half-bits merged, trailing gap).
 _EXPECTED_TEST_KEY = [
     2000, -1000, 1000, -2000, 1000, -1000, 2000, -1000, 1000, -1000,
     1000, -1000, 1000, -1000, 1000, -1000, 1000, -1000, 1000, -1000,
