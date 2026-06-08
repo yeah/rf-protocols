@@ -1,12 +1,9 @@
 """Encoder for Marantec garage door / gate RF remotes.
 
-868.35 MHz OOK (433.92 MHz variant available), Manchester-coded. Encodes the
-static 49-bit code reported by a capture tool such as a Flipper Zero, which
-remains valid indefinitely (non-rolling). Does not cover rolling-code Marantec
-systems or the unrelated 24-bit "Marantec24" cloner protocol.
-
-References:
-- https://github.com/flipperdevices/flipperzero-firmware/blob/dev/lib/subghz/protocols/marantec.c
+868.35 MHz OOK (433.92 MHz variant available), Manchester-coded. Encodes a
+static, indefinitely valid (non-rolling) 49-bit code. Does not cover
+rolling-code Marantec systems or the unrelated 24-bit "Marantec24" cloner
+protocol.
 """
 
 from __future__ import annotations
