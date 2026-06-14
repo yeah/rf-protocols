@@ -1,16 +1,11 @@
 """Encoder for Hörmann garage door / gate RF remotes (HSM fixed-code).
 
-433.92 MHz and 868.3 MHz OOK, pulse-width coded. Encodes the static 44-bit code
-reported by a capture tool such as a Flipper Zero, which remains valid
-indefinitely (non-rolling).
-
-Covers the fixed-code "blue button" Hörmann remotes: HSM2, HSM4, HS1, HS2, HS4,
-HSE2, HSE4, HSZ1, HSZ2, HSP4, HSP4-C, HSD2-A, HSD2-C (868.3 MHz) and HS4, HSM4,
-HSE2 (433.92 MHz). Does NOT cover the BiSecur ("BS") rolling-code remotes or the
-older 40.685 MHz ("grey button") generation.
-
-References:
-- https://github.com/flipperdevices/flipperzero-firmware/blob/dev/lib/subghz/protocols/hormann.c
+433.92 MHz and 868.3 MHz OOK, pulse-width coded. Encodes a static,
+indefinitely valid (non-rolling) 44-bit code. Covers the fixed-code "blue
+button" Hörmann remotes (HSM2, HSM4, HS1, HS2, HS4, HSE2, HSE4, HSZ1, HSZ2,
+HSP4, HSP4-C, HSD2-A, HSD2-C at 868.3 MHz; HS4, HSM4, HSE2 at 433.92 MHz).
+Does not cover the BiSecur ("BS") rolling-code remotes or the older 40.685 MHz
+("grey button") generation.
 """
 
 from __future__ import annotations
