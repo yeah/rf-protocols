@@ -20,8 +20,6 @@ _TE_LONG = 640
 
 _HEADER_TE = {12: 47, 24: 76}
 
-_BIT_COUNTS = (12, 24)
-
 
 class CameCommand(RadioFrequencyCommand):
     """Encode a CAME fixed-code garage door / gate frame."""
@@ -37,7 +35,7 @@ class CameCommand(RadioFrequencyCommand):
         frequency: int = _FREQUENCY_433,
     ) -> None:
         """Initialize the CAME command."""
-        if bit_count not in _BIT_COUNTS:
+        if bit_count not in _HEADER_TE:
             raise ValueError("bit_count must be 12 or 24")
         if code < 0 or code >= (1 << bit_count):
             raise ValueError("code does not fit in bit_count bits")
