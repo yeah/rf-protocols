@@ -1,15 +1,9 @@
 """Encoder for CAME garage door / gate RF remotes (fixed-code).
 
-433.92 MHz OOK (315 MHz variant available), pulse-width coded. Encodes the
-static 12- or 24-bit code reported by a capture tool such as a Flipper Zero,
-which remains valid indefinitely (non-rolling).
-
-Covers classic CAME fixed-code remotes (e.g. TOP/TAM/TWIN series, 12- and
-24-bit). The related Prastel and Airforce variants share this encoding but are
-not claimed here.
-
-References:
-- https://github.com/flipperdevices/flipperzero-firmware/blob/dev/lib/subghz/protocols/came.c
+433.92 MHz OOK (315 MHz variant available), pulse-width coded. Encodes a
+static, indefinitely valid (non-rolling) 12- or 24-bit code. Covers classic
+CAME fixed-code remotes (e.g. TOP/TAM/TWIN series). The related Prastel and
+Airforce variants share this encoding but are not claimed here.
 """
 
 from __future__ import annotations
@@ -24,8 +18,9 @@ _REPEAT_COUNT = 10
 _TE_SHORT = 320
 _TE_LONG = 640
 
-# Header (inter-frame) low, in te_short units, keyed by bit count.
 _HEADER_TE = {12: 47, 24: 76}
+
+_BIT_COUNTS = (12, 24)
 
 
 class CameCommand(RadioFrequencyCommand):
@@ -42,7 +37,7 @@ class CameCommand(RadioFrequencyCommand):
         frequency: int = _FREQUENCY_433,
     ) -> None:
         """Initialize the CAME command."""
-        if bit_count not in _HEADER_TE:
+        if bit_count not in _BIT_COUNTS:
             raise ValueError("bit_count must be 12 or 24")
         if code < 0 or code >= (1 << bit_count):
             raise ValueError("code does not fit in bit_count bits")
